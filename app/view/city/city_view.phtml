@@ -1,0 +1,24 @@
+<h1>Cadastro de Cidades</h1>
+<hr>
+<form method="post" action="Request.php?class=CityCtr&method=run">
+    <!-- id oculto -->
+    <input type="hidden" name="id" value="<?= $this->model->getId() ?>">
+
+    <label for="name">Nome:</label>
+    <input type="text" id="name" name="name" value="<?= $this->model->getName() ?>">
+    <br>
+    <label for="state">UF</label>
+    <select name="state" id="state">
+        <?php 
+        $states = core\util\Strings::getUf();
+        foreach ($states as $key => $value) {
+            ?>
+            <option value="<?= $key ?>" <?= ($key == $this->model->getState()) ? 'selected' : '' ?>><?=$value?></option>
+            <?php
+        }
+        ?>
+    </select>
+    <br>
+    <input type="submit" name="command" value="Salvar">
+    <input type="submit" name="command" value="Excluir">
+</form>

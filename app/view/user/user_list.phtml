@@ -1,0 +1,41 @@
+<h1>Consulta de Usuarios</h1>
+<hr>
+<form method="post" 
+     action="Request.php?class=UserCtr&method=showList&page=1">
+
+    <label for="data[0]">Nome:</label>
+    <input type="text" name="data[0]" value="<?= $this->sqlData[0] ?>">
+    
+    <label for="data[1]">Status:</label>
+    <select name="data[1]">
+        <option value="A" <?= $this->sqlData[1] == 'A' ? 'selected' : '' ?> >Ativo</option>
+        <option value="I" <?= $this->sqlData[1] == 'I' ? 'selected' : '' ?> >Inativo</option>
+    <select>
+        
+
+    <br>
+    <label for="limit">Registros por página:</label>
+    <select name="limit" id="limit">
+        <option <?= $this->regPerPage == 5 ? "selected" : '' ?> 
+                                             value="5">5</option>
+        <option <?= $this->regPerPage == 10 ? "selected" : '' ?> 
+                                               value="10">10</option>
+        <option <?= $this->regPerPage == 20 ? "selected" : '' ?> 
+                                               value="20">20</option>
+    </select>
+    <br>
+    <input type="submit" name="command" value="OK">
+</form>
+
+<br>
+
+<?php
+$this->createList(
+    $this->model,
+    array('Nome', 'Genero', 'Status', 'Cidade'),
+    array('getName', 'getGender', 'getStatus', 'getCityAsString'),
+    'UserCtr'
+);
+
+?>
+

@@ -1,0 +1,28 @@
+<h1>Relatório de Cidades</h1>
+<hr>
+<form method="post" action="Request.php?class=CityCtr&method=showReport">
+    <label for="name">Nome:</label>
+    <input type="text" name="name" id="name" value="<?=$this->name?>">
+    <br>
+    <label for="state">Estado</label>
+    <select name="state" id="state">
+        <option value="TODOS">Todos</option>
+        <option value="SP">SP</option>
+        <option value="MG">MG</option>
+        <option value="MS">MS</option>
+        <option value="RJ">RJ</option>
+        <option value="PR">PR</option>
+        <!-- outros estados aqui....  -->
+    </select>
+    <br>
+    <label for="destino">Gerar em:</label>
+    <select name="dest" id="dest">
+        <option value="F">Visualizar</option>
+        <option value="D">Baixar</option>      
+    </select>
+    <input type="submit" name="command" value="OK">
+
+</form>
+
+<iframe style="width:100%; height:500px;" id="rpt" src="<?=$this->urlRpt?>" frameborder="0"></iframe>
+

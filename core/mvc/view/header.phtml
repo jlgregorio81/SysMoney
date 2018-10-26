@@ -1,0 +1,66 @@
+<?php
+//..configurar os uses
+use core\Application;
+use core\util\Session;
+
+//..se houver a sessão active user criada, então pega ela...
+$this->activeUser = Session::getSession('activeUser') ? Session::getSession('activeUser')->getName() : 'Visitante';
+
+?>
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    
+    <title>
+        <?=core\Application::APP_NAME ?>
+    </title>
+</head>
+
+<body>
+    <header>
+        <img src="<?= core\Application::APP_ICON ?>" alt="">
+        <h1><?=core\Application::APP_NAME ?></h1>
+        <!-- mostrar o usuário ativo  -->
+        <p><strong>Usuário Ativo: </strong> <?=$this->activeUser;?> </p>
+
+        <hr>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="index.php">Início</a></li>
+            <li>
+                Cadastros
+                <ul>
+                    <li><a href="Request.php?class=CityCtr&method=showView">Cidades</a></li>
+                    <li><a href="Request.php?class=CategoryCtr&method=showView">Categorias</a></li>
+                    <li><a href="Request.php?class=BillCtr&method=showView">Contas</a></li>
+                    <li><a href="Request.php?class=UserCtr&method=showView">Usuários</a></li>
+                </ul>
+            </li>
+            <li>
+                Consultas
+                <ul>
+                    <li><a href="Request.php?class=CityCtr&method=showList">Cidades</a></li>
+                    <li><a href="Request.php?class=CategoryCtr&method=showList">Categorias</a></li>
+                    <li><a href="Request.php?class=BillCtr&method=showList">Contas</a></li>
+                    <li><a href="Request.php?class=UserCtr&method=showList">Usuários</a></li>
+                </ul>
+            </li>
+            <li>
+                Relatórios
+                <ul>
+                    <li><a href="#">Cidades</a></li>
+                    <li><a href="#">Categorias</a></li>
+                    <li><a href="#">Contas</a></li>
+                </ul>
+            </li>
+            <li><a href="Request.php?class=UserCtr&method=doLogout">Sair</a></li>
+        </ul>
+    </nav>
+    
+    <section class="content"> 

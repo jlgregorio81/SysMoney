@@ -1,0 +1,25 @@
+<h1>Listagem de Cidades</h1>
+<hr>
+
+<form method="post" action="Request.php?class=CityCtr&method=showList&page=1">
+    <label for="name">Nome:</label>
+    <br>
+    <input type="text" name="data[0]" id="name" value="<?= $this->sqlData[0] ?>">
+    <br>
+    <label for="limit">Registros por página</label>
+    <select name="limit" id="limit">
+        <option <?= $this->regPerPage == 5 ? "selected" : '' ?> value="5">5</option>
+        <option <?= $this->regPerPage == 10 ? "selected" : '' ?> value="10">10</option>
+        <option <?= $this->regPerPage == 20 ? "selected" : '' ?> value="20">20</option>
+    </select>
+    <br>
+    <input type="submit" name="command" value="OK">
+
+</form>
+
+<!-- listagem e paginação -->
+<?php
+    //var_dump($_POST);
+    $this->createList($this->model, array('Nome', 'Estado'), array('getName', 'getState'), 'CityCtr');
+?>
+

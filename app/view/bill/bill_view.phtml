@@ -1,0 +1,58 @@
+<h2>Cadastro de Contas</h2>
+
+<form method="post" action="Request.php?class=BillCtr&method=run">
+    <input type="hidden" name="id" id="id" value="<?= $this->model->getId() ?>">
+
+
+
+    <label for="description">Descrição:</label>
+    <input type="text" name="description" id="description" value="<?= $this->model->getDescription() ?>">
+    <br>
+
+    <label for="id_category">Categoria:</label>
+    <select name="id_category" id="id_category">
+        <?php
+        if ($this->categories) {
+            foreach ($this->categories as $category) {
+                ?>
+                <option value="<?= $category->getId() ?>"
+                <?= $category->getId() == $this->model->getCategory()->getId() ? "selected" : '' ?>>
+                <?= $category->getName() ?></option>
+                <?php
+            }
+        }
+        ?>
+    </select><br>
+
+    <label for="date">Data:</label>
+    <input type="date" name="date" id="date" value="<?= $this->model->getDate() ?>"><br>
+
+    <label for="value">Valor:</label>
+    <input type="number" name="value" id="" step=".01" value="<?= $this->model->getValue() ?>"><br>
+
+    <label for="due">Vencimento:</label>
+    <input type="date" name="due" id="due" value="<?= $this->model->getDue() ?>">
+
+    <label for="type">Tipo</label>
+    <select name="type" id="type">
+        <option value="D" <?= $this->model->getType() == "D" ? 'selected' : '' ?> 
+            >Dinheiro</option>
+        <option value="C" <?= $this->model->getType() == "C" ? 'selected' : '' ?>
+            >Cartão</option>        
+        <option value="C" <?= $this->model->getType() == "B" ? 'selected' : '' ?>
+            >Boleto</option>
+    </select>
+    <br>
+
+    <label for="payment">Data de Pagamento:</label>
+    <input type="date" name="payment" id="payment" value="<?= $this->model->getPayment() ?>">
+    <br>
+
+    <label for="obs">Observações:</label><br>
+    <textarea name="obs" id="obs" cols="30" rows="10"><?= $this->model->getObs() ?></textarea>
+    <br>
+
+    <input type="submit" name="command" value="Novo">
+    <input type="submit" name="command" value="Salvar">
+    <input type="submit" name="command" value="Excluir">
+</form>

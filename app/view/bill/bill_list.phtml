@@ -1,0 +1,57 @@
+<h2>Cadastro de Contas</h2>
+<hr>
+<form method="post" action="Request.php?class=BillCtr&method=showList&page=1">
+
+<label for="data[0]">Descrição</label>
+<input type="text" name="data[0]" id="desc" value="<?= $this->sqlData[0] ?>">
+<br>
+
+<label for="data[1]">Tipo:</label>
+    <select name="data[1]">
+        <option value="T" <?= $this->sqlData[1] == 'T' ? 'selected' : '' ?> >Todos</option>
+        <option value="D" <?= $this->sqlData[1] == 'D' ? 'selected' : '' ?> >Dinheiro</option>
+        <option value="C" <?= $this->sqlData[1] == 'C' ? 'selected' : '' ?> >Cartão</option>
+        <option value="B" <?= $this->sqlData[1] == 'B' ? 'selected' : '' ?> >Boleto</option>
+    <select>
+<br>
+
+<fieldset>
+<legend>Vencimento</legend>
+<label for="data[2]">Data Inicial:</label>
+<input type="date" name="data[2]" id="data[2]" required value="<?=$this->sqlData[2]?>">
+<label for="data[3]">Data Inicial:</label>
+<input type="date" name="data[3]" id="data[3]" required  value="<?=$this->sqlData[3]?>">
+</fieldset>
+
+<label for="data[4]">Order por:</label>
+    <select name="data[4]">
+        <option value="C" <?= $this->sqlData[4] == 'T' ? 'selected' : '' ?> >Criação</option>
+        <option value="V" <?= $this->sqlData[4] == 'D' ? 'selected' : '' ?> >Vencimento</option>        
+    <select>
+<br>
+
+<br>
+    <label for="limit">Registros por página:</label>
+    <select name="limit" id="limit">
+        <option <?= $this->regPerPage == 5 ? "selected" : '' ?> 
+                                             value="5">5</option>
+        <option <?= $this->regPerPage == 10 ? "selected" : '' ?> 
+                                               value="10">10</option>
+        <option <?= $this->regPerPage == 20 ? "selected" : '' ?> 
+                                               value="20">20</option>
+    </select>
+
+
+<input type="submit" name="command" value="OK">
+
+</form>
+
+<?php
+$this->createList(
+    $this->model,
+    array('Descrição', 'Categoria', 'Valor', 'Tipo', 'Data', 'Vencimento', 'Pagamento'),
+    array('getDescription', 'getCategoryAsString', 'getValue', 'getTypeAsString', 'getDate', 'getDue', 'getPayment'),
+    'BillCtr'
+);
+
+?>

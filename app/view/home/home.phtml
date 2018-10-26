@@ -1,0 +1,36 @@
+<?php
+use core\Application;
+?>
+
+<h1>Bem vindo ao <?= Application::APP_NAME ?>!!!</h1>
+<hr>
+
+<?php
+//..exibe a msg de erro
+if ($this->msgError) {
+    ?>
+    <p style="color:red"><?= $this->msgError; ?></p>
+<?php
+}
+
+
+if ($this->activeUser == 'Visitante') {
+    ?>   
+    <p>Você não está logado! Entre com suas credenciais:</p> 
+    <form method="post" action="Request.php?class=UserCtr&method=doLogin">
+        <label for="email">Email:</label>
+        <input type="text" name="email" id="email"><br>
+        <label for="passwd">Senha:</label>
+        <input type="password" name="passwd" id="passwd"><br>
+        <input type="submit" value="OK">
+    </form>
+    <p><a href="#">Ainda não tem cadastro? Clique aqui!</a></p>
+    <?php
+
+} else {
+    ?>
+    <p>Olá, <?= $this->activeUser ?>!</p>
+    <?php
+
+}
+?>
