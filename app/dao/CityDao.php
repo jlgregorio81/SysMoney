@@ -7,6 +7,7 @@ use core\dao\Dao;
 final class CityDao extends Dao
 {
 
+    const COL_ID = 'id_city';
     const COL_NAME = 'name_city';
     const COL_STATE = 'state_city';
 
@@ -35,17 +36,25 @@ final class CityDao extends Dao
                 $data[self::COL_NAME],
                 $data[self::COL_STATE]
             );
-        }
-        else {
+        } else {
             return null;
         }
     }
 
-    public function selectAll($criteria = null, $orderBy = null, 
-    $groupBy = null, $limit = null, $offSet = null)
-    {
-        $data = parent::selectAll($criteria, $orderBy, $groupBy, 
-            $limit, $offSet);
+    public function selectAll(
+        $criteria = null,
+        $orderBy = null,
+        $groupBy = null,
+        $limit = null,
+        $offSet = null
+    ) {
+        $data = parent::selectAll(
+            $criteria,
+            $orderBy,
+            $groupBy,
+            $limit,
+            $offSet
+        );
         $arrayList = null;
         if ($data) {
             foreach ($data as $reg) {
@@ -59,7 +68,35 @@ final class CityDao extends Dao
         return $arrayList;
     }
 
-    
+    public function selectAllAsJson(
+        $criteria = null,
+        $orderBy = null,
+        $groupBy = null,
+        $limit = null,
+        $offSet = null
+    ) {
+        $data = parent::selectAll(
+            $criteria,
+            $orderBy,
+            $groupBy,
+            $limit,
+            $offSet
+        );        
+        if ($data) {
+            return json_encode($data);
+        } else{
+            return json_encode(array('status'=>'error'));
+        }        
+    }
+
+    public function findByIdAsJson($id){
+        $data = parent::findById($id);
+        if ($data) {
+            return json_encode($data);
+        } else {
+            return '';
+        }    
+    }
 
 
 }

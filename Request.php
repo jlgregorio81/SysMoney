@@ -29,10 +29,10 @@ class Request
              * Se o resultado do 'if' for falso, não faz a requisição. 
              */
 
-            if (Session::getSession('activeUser') || $method == 'doLogin' 
+            /*if (Session::getSession('activeUser') || $method == 'doLogin' 
                 || ($class == 'UserCtr' && ($method == 'showView' || $method == 'run'))
                 || $method == 'activateUser'   
-            ) {
+            ) { */
                 if ($class) {
                     $class = "app\\controller\\" . $class; //..acerta o caminho da classe.
                     //..instancia um novo objeto da classe informada.
@@ -48,7 +48,7 @@ class Request
             } else {
                 Application::start();
             }
-        }
+        //}
     }
 }
 

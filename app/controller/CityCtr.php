@@ -32,4 +32,25 @@ class CityCtr extends Controller{
         parent::showList();
     }
 
+    public function getCities(){
+        if(isset($this->get['name'])){            
+            $name = $this->get['name'];
+            $criteria = "upper (" . CityDao::COL_NAME . ") like upper('{$name}%')";
+            $cities = (new CityDao())->selectAllAsJson($criteria,CityDao::COL_NAME);            
+            echo $cities;            
+        }
+    }
+
+    public function getCity(){
+        if(isset($this->get['idcity'])){
+            $idCity = $this->get['idcity'];            
+            $city = (new CityDao())->findByIdAsJson($idCity);
+            if($city){
+                echo $city;
+            } else{
+                echo "null";
+            }
+        }
+    }
+
 }

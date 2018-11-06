@@ -158,6 +158,22 @@ final class UserDao extends Dao
         }
     }
 
-
+    /**
+     * Verifica se um determinado e-mail está cadastrado no banco de dados.
+     * @param string $email O email usado para a busca
+     * @return bool True se já estiver cadastrado e False caso não esteja cadastrado. 
+     */
+    public function emailExists($email){
+        try{
+            $sqlObj = new SqlObject(Connection::getConnection());
+            $user = $sqlObj->select($this->tableName, '*', "email_user = '{$email}'");
+            if($user)
+                return true;
+            else
+                return false;
+        } catch(\Exception $ex){
+            throw $ex;
+        }
+    }
 
 }

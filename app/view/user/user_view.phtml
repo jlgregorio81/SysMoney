@@ -23,24 +23,16 @@
             <label for="email">E-mail:</label>
             <input type="email" name="email" id="email" required maxlength="50"
                    value="<?= $this->model->getEmail() ?>">
+                   <img id="loader" src="" style="width:32px;">
             <br>
-            <label for="city">Cidade:</label>
-            <select id="city" name="city">
-                <!-- preencher com as cidades do BD -->
-                <?php
-                if ($this->cities) {
-                    foreach ($this->cities as $city) {
-                        ?>
-                        <option value="<?= $city->getId() ?>" 
-                        <?=($city->getId() == $this->model->getCity()->getId()) ? "selected" : "" ?>
-                        >
-                           <?= $city->getName() ?>
-                        </option>
-                        <?php
-                    }
-                }
-                ?>                
-            </select>
+            <fieldset>
+            <legend>Cidade:</legend>
+                <label for="city">Id:</label>
+                <input type="number" name="city" id="city" step="1" value="<?=$this->model->getCity()->getId()?>">
+                <label for="namecity">Nome:</label>
+                <input type="text" name="namecity" id="namecity" readonly value="<?=$this->model->getCity()->getName() . "/" . $this->model->getCity()->getState() ?>">
+                <button id="btncity" name="btncity">Pesquisar</button>
+            </fieldset>
 
             <label>Senha:
                 <input type="password" id="password" required name="password" >                
@@ -59,3 +51,50 @@
             </button>
 
             </form>
+
+
+<!-- adiciona a Jquery -->
+<script src='core/vendor/js/jquery-3.3.1.min.js'></script>
+
+<!-- scripts ajaxa da página -->
+<script>
+    //ao sair do input cujo id é idcity
+    $("#city").blur(function () {
+        if($("#city").val() != ''){ //..se o elemento do form cujo id é idcity não estiver vazio, então...
+        //..cria a url para a requisição - observe a variável fornecida via get
+        url = "http://localhost/SysMoney/Request.php?class=CityCtr&method=getCity&idcity=" + $("#city").val();
+        $.getJSON(url, function (data) { //..usa a função getJSON do jquery
+                if(data != null){
+                    //..se retornou cidade, então seta os valores no form
+                    $("#namecity").val(data['name_city'] + '/' + data['state_city']);                    
+                } else{ //..senão, limpa o idcity, seta o foco nele e exibe um alerta
+                    $("#city").val('');
+                    $("#city").focus();
+                    alert('Cidade não encontrada!');                    
+                }
+            }
+        );
+        }
+    });
+
+
+    //..verificar se o e-mail já está cadastrado no banco de dados. 
+    $("#email").blur(function () {
+        $("#loader").attr('src','');
+        if($("#email").val() != ''){
+            $("#loader").attr('src','core/img/loading.gif');
+            url = "http://localhost/SysMoney/Request.php?class=UserCtr&method=emailExists&email=" + $("#email").val(); 
+            $.getJSON(url,function (data) {
+                if(data == false)    
+                    $("#loader").attr('src','core/img/checked.png');    
+                else{
+                    $("#loader").attr('src','core/img/warning.png');
+                    $("#email").focus();
+                }
+            }
+            );            
+        }
+    });
+
+
+</script>

@@ -161,8 +161,14 @@ final class UserCtr extends Controller
         } finally{ //..mostra a msg
             $msg->show();
         }
+    }
 
-
+    function emailExists(){
+        if(isset($this->get['email'])){
+            $email = $this->get['email'];
+            $result = (new UserDao())->emailExists($email);
+            echo $result ? "true" : "false";
+        }
     }
 
 
