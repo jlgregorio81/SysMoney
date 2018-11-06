@@ -28,10 +28,10 @@
             <fieldset>
             <legend>Cidade:</legend>
                 <label for="city">Id:</label>
-                <input type="number" name="city" id="city" step="1" value="<?=$this->model->getCity()->getId()?>">
+                <input type="number" name="city" id="city" step="1" value="<?= $this->model->getCity()->getId() ?>">
                 <label for="namecity">Nome:</label>
-                <input type="text" name="namecity" id="namecity" readonly value="<?=$this->model->getCity()->getName() . "/" . $this->model->getCity()->getState() ?>">
-                <button id="btncity" name="btncity">Pesquisar</button>
+                <input type="text" name="namecity" id="namecity" readonly value="<?= $this->model->getCity()->getName() . "/" . $this->model->getCity()->getState() ?>">
+                <button type="button" id="btncity" name="btncity">Pesquisar</button>
             </fieldset>
 
             <label>Senha:
@@ -51,6 +51,26 @@
             </button>
 
             </form>
+
+
+
+<div id="modalcity" style="display:none;n  width:30%; height:300px; overflow:scroll; position:absolute; left:25%; top:50%; border: thin black solid;">
+    <style type="text/css" scoped>
+        th, td{border: solid thin black}
+    </style>
+    <h3>Pesquisa de Cidades</h1>
+    <input type="text" name="citymodal" id="citymodal">
+    <button id="btncitymodal">Listar</button>
+    <table>
+        <thead>
+            <th>Nome da Cidade</th>
+            <th>OK</th>
+        </thead>
+        <tbody id="tbody">
+        
+        </tbody>
+    </table>
+</div>
 
 
 <!-- adiciona a Jquery -->
@@ -95,6 +115,39 @@
             );            
         }
     });
+
+    //..exibir/ocultar a div de pesquisa
+    $("#btncity").click(function () { 
+        $("#modalcity").toggle();        
+    });
+
+    //..listar as cidades
+    $("#btncitymodal").click(function () { 
+        if($("#citymodal").val() != ''){
+            url = "http://localhost/SysMoney/Request.php?class=CityCtr&method=getCities&name=" + $("#citymodal").val();
+            $.getJSON(url, function (data) {
+                if(data){
+                    $.each(data, function (key, value) { 
+                        city = value.name_city + "/" + value.state_city;
+                        $("#tbody").append("<tr><td>" + city + "</td>" + 
+                        "<td><button name=\"" + city +"\"  class=\"btnselect\" id=\"" + value.id_city + "\">OK</button></td>");                                                                        
+                    });
+                }
+            }
+            ); 
+        }
+    });
+
+    
+    //..adiciona um evento click na classe .btnselect e trata o evento
+    $(document).on('click','.btnselect',function(){
+        cityName = $(this).attr('name');        
+        cityId = $(this).attr('id');
+        $("#city").val(cityId);
+        $("#namecity").val(cityName);
+        $("#modalcity").toggle();
+    });
+    
 
 
 </script>
